@@ -1,5 +1,8 @@
-*DBM_Pre_Interview_Assignments.xlsx
 .DS_Store
+.vscode/
+
 src/*.egg-info/
+paypal_data_analyst_take_home.egg-info
 src/__pycache__/
-.vscode
+notebooks/
+*DBM_Pre_Interview_Assignments.xlsx
