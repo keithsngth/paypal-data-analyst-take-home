@@ -1,6 +1,46 @@
+"""Main entry point for WhatCMS data enrichment application."""
+
+from pathlib import Path
+
+import yaml
+from fire import Fire
+from loguru import logger
+
+from src.data_enricher import DataEnricher
+
+
 def main():
-    print("Hello from paypal-data-analyst-take-home!")
+    """Main function to run WhatCMS enrichment."""
+
+    # Get API key from config
+    config = yaml.safe_load(open("./config/config.yaml"))
+    api_key = config["api_key"]
+
+    if not api_key:
+        logger.error("API key not found in config")
+        raise
+
+    # Configure paths
+    input_file = "./data/whatcms_urls.csv"
+    output_file = "./output/whatcms_enriched_output.csv"
+
+    # Verify input file exists
+    if not Path(input_file).exists():
+        raise FileNotFoundError(f"Input file not found: {input_file}")
+
+    # Run enrichment workflow
+    try:
+        enricher = DataEnricher(api_key)
+        enricher.run_enrichment_workflow(
+            input_file,
+            output_file,
+            sheet_name="whatcms_input",
+        )
+
+    except Exception as e:
+        logger.error(f"Error: {str(e)}")
+        raise
 
 
 if __name__ == "__main__":
-    main()
+    Fire(main)

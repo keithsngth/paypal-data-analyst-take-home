@@ -1,2 +1,5 @@
-DBM_Pre_Interview_Assignments.xlsx
+*DBM_Pre_Interview_Assignments.xlsx
 .DS_Store
+src/*.egg-info/
+src/__pycache__/
+.vscode

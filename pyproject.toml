@@ -1,7 +1,18 @@
 [project]
 name = "paypal-data-analyst-take-home"
 version = "0.1.0"
-description = "Add your description here"
+description = "WhatCMS Data Enrichment"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "pandas>=2.3.3",
+    "requests>=2.32.5",
+    "openpyxl>=3.1.2",
+    "pyyaml>=6.0.3",
+    "ipykernel>=7.1.0",
+    "jupyter>=1.1.1",
+    "typing>=3.10.0.0",
+    "loguru>=0.7.3",
+    "fire>=0.7.1",
+]
+
