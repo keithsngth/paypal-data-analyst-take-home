@@ -12,17 +12,15 @@ from src.data_enricher import DataEnricher
 def main():
     """Main function to run WhatCMS enrichment."""
 
-    # Get API key from config
+    # Get API key & paths from config
     config = yaml.safe_load(open("./config/config.yaml"))
     api_key = config["api_key"]
+    input_file = config["input_file"]
+    output_file = config["output_file"]
 
     if not api_key:
         logger.error("API key not found in config")
         raise
-
-    # Configure paths
-    input_file = "./data/whatcms_urls.csv"
-    output_file = "./output/whatcms_enriched_output.csv"
 
     # Verify input file exists
     if not Path(input_file).exists():
