@@ -24,6 +24,25 @@ class WhatCMSResponse:
     web_framework: List[str] = field(default_factory=list)
     whatcms_response: str = ""
 
+    def __repr__(self):
+        """Return a clean string representation without tabs or extra indentation."""
+        lines = [
+            f"WhatCMSResponse:",
+            f"  url: {self.url}",
+            f"  whatcms_link: {self.whatcms_link}",
+            f"  blog_cms: {self.blog_cms}",
+            f"  ecommerce_cms: {self.ecommerce_cms}",
+            f"  programming_language: {self.programming_language}",
+            f"  database: {self.database}",
+            f"  cdn: {self.cdn}",
+            f"  web_server: {self.web_server}",
+            f"  landing_page_builder_cms: {self.landing_page_builder_cms}",
+            f"  operating_system: {self.operating_system}",
+            f"  web_framework: {self.web_framework}",
+            f"  whatcms_response: {self.whatcms_response}",
+        ]
+        return "\n".join(lines)
+
 
 class WhatCMSClient:
     """Client for interacting with the WhatCMS API."""
