@@ -1,8 +1,8 @@
 """WhatCMS API Client for fetching website technology information."""
 
 import time
-from dataclasses import dataclass
-from typing import Dict
+from dataclasses import dataclass, field
+from typing import Dict, List
 
 import requests
 
@@ -13,15 +13,15 @@ class WhatCMSResponse:
 
     url: str
     whatcms_link: str = ""
-    blog_cms: str = ""
-    ecommerce_cms: str = ""
-    programming_language: str = ""
-    database: str = ""
-    cdn: str = ""
-    web_server: str = ""
-    landing_page_builder_cms: str = ""
-    operating_system: str = ""
-    web_framework: str = ""
+    blog_cms: List[str] = field(default_factory=list)
+    ecommerce_cms: List[str] = field(default_factory=list)
+    programming_language: List[str] = field(default_factory=list)
+    database: List[str] = field(default_factory=list)
+    cdn: List[str] = field(default_factory=list)
+    web_server: List[str] = field(default_factory=list)
+    landing_page_builder_cms: List[str] = field(default_factory=list)
+    operating_system: List[str] = field(default_factory=list)
+    web_framework: List[str] = field(default_factory=list)
     whatcms_response: str = ""
 
 
@@ -123,6 +123,7 @@ class WhatCMSClient:
     def _extract_category_data(self, response_obj: WhatCMSResponse, category: Dict):
         """
         Extract data from a technology category.
+        Appends to existing lists to handle multiple technologies in same category.
 
         Args:
             response_obj: WhatCMSResponse object to populate
@@ -132,26 +133,47 @@ class WhatCMSClient:
         version = category.get("version", None)
         technologies = category.get("categories", [])
 
-        tech_category = "_".join(technologies).lower().replace("-", "")
+        tech_category = self._clean_tech_category(technologies=technologies)
         tech_string = f"{name}{" " + version if version else ""}"
 
-        # Map to response object fields
+        # Map to response object fields, append to lists to handle multiple technologies in same category
         if tech_category == "blog_cms":
-            response_obj.blog_cms = tech_string
+            response_obj.blog_cms.append(tech_string)
         elif tech_category == "ecommerce_cms":
-            response_obj.ecommerce_cms = tech_string
+            response_obj.ecommerce_cms.append(tech_string)
         elif tech_category == "programming_language":
-            response_obj.programming_language = tech_string
+            response_obj.programming_language.append(tech_string)
         elif tech_category == "database":
-            response_obj.database = tech_string
+            response_obj.database.append(tech_string)
         elif tech_category == "cdn":
-            response_obj.cdn = tech_string
+            response_obj.cdn.append(tech_string)
         elif tech_category == "web_server":
-            response_obj.web_server = tech_string
+            response_obj.web_server.append(tech_string)
+        elif tech_category == "landing_page_builder_cms":
+            response_obj.landing_page_builder_cms.append(tech_string)
         elif tech_category == "operating_system":
-            response_obj.operating_system = tech_string
+            response_obj.operating_system.append(tech_string)
         elif tech_category == "web_framework":
-            response_obj.web_framework = tech_string
+            response_obj.web_framework.append(tech_string)
+
+    def _clean_tech_category(self, technologies: List[str]) -> str:
+        """
+        Clean the technology category string. Tasks encapsulated include:
+            1. Convert to lowercase
+            2. Join multiple categories into a single category using underscores
+            3. Remove hyphens
+            4. Remove spaces withn underscores
+
+        Args:
+            technologies: List of technology categories
+
+        Returns:
+            Cleaned technology category
+        """
+        tech_category = (
+            "_".join(technologies).lower().replace("-", "").replace(" ", "_")
+        )
+        return tech_category
 
     def close(self):
         """Close the HTTP session."""

@@ -70,7 +70,7 @@ class DataEnricher:
             except Exception as e:
                 logger.error(f"Failed to process {url}: {str(e)}")
 
-        logger.info(f"Completed enrichment of {total} URLs")
+        logger.success(f"Completed enrichment of {total} URLs")
         return results
 
     def enrich_dataframe(
@@ -100,6 +100,7 @@ class DataEnricher:
     def _responses_to_dataframe(self, responses: List[WhatCMSResponse]) -> pd.DataFrame:
         """
         Convert list of WhatCMSResponse objects to DataFrame.
+        Converts list fields to comma-separated strings to handle multiple technologies.
 
         Args:
             responses: List of WhatCMSResponse objects
@@ -114,15 +115,33 @@ class DataEnricher:
                 {
                     "url": response.url,
                     "whatcms_link": response.whatcms_link,
-                    "Blog_CMS": response.blog_cms,
-                    "E-commerce_CMS": response.ecommerce_cms,
-                    "Programming_Language": response.programming_language,
-                    "Database": response.database,
-                    "CDN": response.cdn,
-                    "Web_Server": response.web_server,
-                    "Landing_Page_Builder_CMS": response.landing_page_builder_cms,
-                    "Operating_System": response.operating_system,
-                    "Web_Framework": response.web_framework,
+                    "Blog_CMS": ", ".join(response.blog_cms)
+                    if response.blog_cms
+                    else "",
+                    "E-commerce_CMS": ", ".join(response.ecommerce_cms)
+                    if response.ecommerce_cms
+                    else "",
+                    "Programming_Language": ", ".join(response.programming_language)
+                    if response.programming_language
+                    else "",
+                    "Database": ", ".join(response.database)
+                    if response.database
+                    else "",
+                    "CDN": ", ".join(response.cdn) if response.cdn else "",
+                    "Web_Server": ", ".join(response.web_server)
+                    if response.web_server
+                    else "",
+                    "Landing_Page_Builder_CMS": ", ".join(
+                        response.landing_page_builder_cms
+                    )
+                    if response.landing_page_builder_cms
+                    else "",
+                    "Operating_System": ", ".join(response.operating_system)
+                    if response.operating_system
+                    else "",
+                    "Web_Framework": ", ".join(response.web_framework)
+                    if response.web_framework
+                    else "",
                     "whatcms_response": response.whatcms_response,
                 }
             )
@@ -147,9 +166,9 @@ class DataEnricher:
             else:
                 raise ValueError(f"Unsupported format: {output_path}")
 
-            logger.info(f"Successfully saved output to {output_path}")
+            logger.success(f"Successfully saved output to {output_path}")
         except Exception as e:
-            self.logger.error(f"Failed to save output: {str(e)}")
+            logger.error(f"Failed to save output: {str(e)}")
             raise
 
     def run_enrichment_workflow(
