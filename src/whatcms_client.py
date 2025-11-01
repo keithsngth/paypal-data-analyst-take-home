@@ -81,7 +81,9 @@ class WhatCMSClient:
             }
 
             # Make the API call
-            response = self.session.get(self.BASE_URL, params=params, timeout=30)
+            response = self.session.get(
+                WhatCMSClient.BASE_URL, params=params, timeout=30
+            )
 
             # Rate limiting
             time.sleep(self.rate_limit_delay)
