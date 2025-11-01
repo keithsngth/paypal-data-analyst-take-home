@@ -1,7 +1,7 @@
 [project]
-name = "paypal-data-analyst-take-home"
+name = "whatcms-url-enquiry-app"
 version = "0.1.0"
-description = "WhatCMS Data Enrichment"
+description = "Enriches URLs with CMS and technology information using WhatCMS API"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
