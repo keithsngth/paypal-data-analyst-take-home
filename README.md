@@ -25,7 +25,7 @@ The application retrieves the following information for each URL:
 ```
 whatcms-url-enquiry-app/
 ├── src/
-│   ├── __init__.py              # Package initialization
+│   ├── __init__.py              # Package initialisation
 │   ├── main.py                  # CLI entry point
 │   ├── whatcms_client.py        # WhatCMS API client
 │   └── data_enricher.py         # Data enrichment interface
@@ -105,23 +105,23 @@ This installs:
    - Sign up and retrieve your API key
 
 - **Update configuration file** (`config/config.yaml`)
+    - **Note**: For this project, the API key is temporarily placed in the config file for simplicity. In a production environment, API keys should be securely stored using a secrets manager or environment variables.
 
-Configure the following settings:
+- Configure the following settings:
 
-```yaml
-api_key: "your_whatcms_api_key_here"
-input_file: "./data/whatcms_urls.csv"
-output_file: "./output/whatcms_enriched_output.csv"
-```
+    ```yaml
+    api_key: "your_whatcms_api_key_here"
+    input_file: "./data/whatcms_urls.csv"
+    output_file: "./output/whatcms_enriched_output.csv"
+    ```
 
-- `api_key`: Your WhatCMS API key
-- `input_file`: Path to your input file (CSV or Excel)
-- `output_file`: Path where enriched results will be saved
-
+    - `api_key`: Your WhatCMS API key
+    - `input_file`: Path to your input file (CSV or Excel)
+    - `output_file`: Path where enriched results will be saved
 
 ### 5. Prepare Input Data
 
-Create an input file with URLs to enrich:
+Create an input file with URLs to enrich.
 
 **Option A: CSV Format** (`data/whatcms_urls.csv`)
 ```csv
@@ -167,7 +167,7 @@ import yaml
 config = yaml.safe_load(open("./config/config.yaml"))
 api_key = config["api_key"]
 
-# Initialize enricher
+# Initialise enricher
 enricher = DataEnricher(api_key)
 
 # Run enrichment workflow with custom paths (overrides config.yaml)
@@ -178,7 +178,7 @@ enricher.run_enrichment_workflow(
 )
 ```
 
-### Using in Jupyter Notebooks
+### Using Jupyter Notebook
 
 ```python
 # Import modules
@@ -190,7 +190,7 @@ import yaml
 config = yaml.safe_load(open("../config/config.yaml"))
 api_key = config["api_key"]
 
-# Initialize client
+# Initialise client
 client = WhatCMSClient(api_key)
 
 # To enrich a single URL
@@ -243,14 +243,14 @@ The enriched output contains all input columns plus 11 new enrichment columns:
 
 #### 1. `WhatCMSResponse` (Dataclass)
 - Stores enrichment results for a single URL
-- Uses `List[str]` for technology fields to handle multiple technologies
-- Provides clean `__repr__` for debugging
+- Uses `List[str]` for technology fields to handle websites with multiple technologies for certain categories
+- Provides clean `__repr__` for viewing/debugging
 
 #### 2. `WhatCMSClient` (API Client)
 - Handles HTTP communication with WhatCMS API
 - Implements rate limiting (10s per API call)
 - Parses JSON API responses into structured data
-- Appends multiple technologies to lists
+- Appends multiple technologies, if applicable, to lists
 
 #### 3. `DataEnricher` (Orchestrator)
 - Loads URLs from CSV/Excel files
@@ -258,6 +258,25 @@ The enriched output contains all input columns plus 11 new enrichment columns:
 - Converts list data to comma-separated strings for export
 - Manages the complete enrichment workflow
 - Handles logging and error reporting
+
+## Future Work
+
+### Testing & Quality Assurance
+- Add unit tests to test HTTPS calls and data enricher given sample inputs
+
+### Security & Configuration
+- Add secrets manager to manage API keys (e.g., AWS Secrets Manager, Azure Key Vault, or environment variables)
+- Add input URL validation and sanitisation to prevent malformed requests
+- Implement configuration validation on startup to catch misconfiguration early
+
+### Error Handling & Reliability
+- Add exponential backoff and retry logic for API failures (network issues, timeouts)
+- Create error summary or report logs at the end of enrichment process
+
+### Features & Extensibility
+- Support additional output formats (e.g., direct database insertion)
+- Add data deduplication before processing to skip duplicate URLs
+
 
 ## Authors
 
