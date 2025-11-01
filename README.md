@@ -23,7 +23,7 @@ The application retrieves the following information for each URL:
 ## Project Structure
 
 ```
-paypal-data-analyst-take-home/
+whatcms-url-enquiry-app/
 ├── src/
 │   ├── __init__.py              # Package initialization
 │   ├── main.py                  # CLI entry point
@@ -100,11 +100,11 @@ This installs:
 
 ### 4. Configure Application Settings
 
-1. **Register for WhatCMS API key** (free tier: 500 calls)
+- **Register for WhatCMS API key** (free tier: 500 calls)
    - Visit: <https://whatcms.org/Account/Key?cmd=RegisterForm>
    - Sign up and retrieve your API key
 
-2. **Update configuration file** (`config/config.yaml`)
+- **Update configuration file** (`config/config.yaml`)
 
 Configure the following settings:
 
