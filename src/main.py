@@ -32,7 +32,6 @@ def main():
         enricher.run_enrichment_workflow(
             input_file,
             output_file,
-            sheet_name="whatcms_input",
         )
 
     except Exception as e:

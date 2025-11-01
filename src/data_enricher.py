@@ -31,7 +31,7 @@ class DataEnricher:
         Returns:
             DataFrame with input URLs
         """
-        logger.debug(f"Loading input data from {file_path}, sheet: {sheet_name}")
+        logger.debug(f"Loading input data from {file_path}")
 
         try:
             if file_path.endswith(".xlsx"):
@@ -175,7 +175,7 @@ class DataEnricher:
         self,
         input_file: str,
         output_file: str,
-        sheet_name: str = "whatcms_input",
+        sheet_name: str = "WHATCMS INPUT",
         url_column: str = "url",
     ):
         """
@@ -184,7 +184,7 @@ class DataEnricher:
         Args:
             input_file: Path to input Excel file
             output_file: Path to output file
-            sheet_name: Sheet name in input file (default: "whatcms_input")
+            sheet_name: Sheet name in input file (default: "WHATCMS INPUT")
             url_column: Name of column containing URLs (default: "url")
         """
         try:
