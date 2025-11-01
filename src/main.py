@@ -1,4 +1,4 @@
-"""Main entry point for WhatCMS data enrichment application."""
+"""Main entry point for WhatCMS url enquiry application."""
 
 from pathlib import Path
 
