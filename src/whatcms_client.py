@@ -100,7 +100,7 @@ class WhatCMSClient:
 
     def __init__(self, api_key: str, rate_limit_delay: float = 10.0):
         """
-        Initialize the WhatCMS client.
+        Initialise the WhatCMS client.
 
         Args:
             api_key: WhatCMS API key

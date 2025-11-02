@@ -13,7 +13,7 @@ class DataEnricher:
 
     def __init__(self, api_key: str):
         """
-        Initialize the data enricher.
+        Initialise the data enricher.
 
         Args:
             api_key: WhatCMS API key
