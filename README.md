@@ -243,7 +243,7 @@ The enriched output contains all input columns plus 11 new enrichment columns:
 
 ![Class Diagram](./diagrams/class_diagram.png)
 
-### Classes
+### Key Objects
 
 #### 1. `WhatCMSResponse` (Dataclass)
 - Stores enrichment results for a single URL
@@ -262,6 +262,20 @@ The enriched output contains all input columns plus 11 new enrichment columns:
 - Converts list data to comma-separated strings for export
 - Manages the complete enrichment workflow
 - Handles logging and error reporting
+
+#### 4. `main` (Entry Point)
+- Application entry point using Fire CLI framework
+- Loads configuration from `config.yaml`
+- Validates API key and input file existence
+- Initialises `DataEnricher` and executes the enrichment workflow
+- Provides command-line interface for running the application
+
+#### 5. `config.yaml` (Configuration)
+- Centralised configuration file for application settings
+- Stores WhatCMS API key for authentication
+- Defines input file path (CSV/Excel with URLs)
+- Defines output file path for enriched results
+- Simplifies configuration management without code changes
 
 ## Future Work
 
