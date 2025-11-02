@@ -74,13 +74,13 @@ class WhatCMSClient:
         response_obj = WhatCMSResponse(url=url)
 
         try:
-            # Construct the API request
+            # Construct API request
             params = {
                 "key": self.api_key,
                 "url": url,
             }
 
-            # Make the API call
+            # Make API call
             response = self.session.get(
                 WhatCMSClient.BASE_URL, params=params, timeout=30
             )
@@ -128,7 +128,7 @@ class WhatCMSClient:
                 response_result = result.get("msg", None)
                 response_obj.whatcms_response = f"{response_code} - {response_result}"
 
-                # Parse technology categories
+                # Parse technology categories & extract data
                 categories = data.get("results", [])
                 if isinstance(categories, list):
                     for category in categories:
@@ -150,11 +150,15 @@ class WhatCMSClient:
             response_obj: WhatCMSResponse object to populate
             category: Category dictionary from API response
         """
+        # Get category data
         name = category.get("name", None)
         version = category.get("version", None)
         technologies = category.get("categories", [])
 
+        # Clean technology category
         tech_category = self._clean_tech_category(technologies=technologies)
+
+        # Generate technology string with version, if available
         tech_string = f"{name}{" " + version if version else ""}"
 
         # Map to response object fields, append to lists to handle multiple technologies in same category

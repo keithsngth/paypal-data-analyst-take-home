@@ -33,6 +33,7 @@ class DataEnricher:
         """
         logger.debug(f"Loading input data from {file_path}")
 
+        # Handle Excel and CSV files
         try:
             if file_path.endswith(".xlsx"):
                 df = pd.read_excel(file_path, sheet_name=sheet_name)
@@ -55,15 +56,18 @@ class DataEnricher:
         Returns:
             List of WhatCMSResponse objects
         """
+        # Initialise results list (list of WhatCMSResponse objects) & total number of URLs
         results = []
         total = len(urls)
 
         logger.debug(f"Starting enrichment of {total} URLs")
 
+        # Process each URL, enumerate starting from 1 for logging purposes
         for i, url in enumerate(urls, 1):
             logger.info(f"Processing {i}/{total}: {url}")
 
             try:
+                # Fetch CMS data for the URL & append to results
                 response = self.client.fetch_cms_data(url)
                 results.append(response)
 
@@ -86,9 +90,11 @@ class DataEnricher:
         Returns:
             Enriched DataFrame
         """
+        # Check if URL column exists in DataFrame
         if url_column not in df.columns:
-            raise ValueError(f"Column '{url_column}' not found in ataFrame")
+            raise ValueError(f"Column '{url_column}' not found in DataFrame")
 
+        # Get URLs from DataFrame
         urls = df[url_column].tolist()
         responses = self.enrich_urls(urls)
 
@@ -108,8 +114,10 @@ class DataEnricher:
         Returns:
             DataFrame with enriched data
         """
+        # Initialise data list of dictionaries (to convert to DataFrame later)
         data = []
 
+        # Process each response & append to data list
         for response in responses:
             data.append(
                 {
@@ -158,6 +166,7 @@ class DataEnricher:
         """
         logger.info(f"Saving output to {output_path}")
 
+        # Handle CSV and Excel file formats
         try:
             if output_path.endswith(".csv"):
                 df.to_csv(output_path, index=False)
@@ -204,4 +213,5 @@ class DataEnricher:
             raise
 
         finally:
+            # Close client session
             self.client.close()
