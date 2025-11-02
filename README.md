@@ -239,7 +239,11 @@ The enriched output contains all input columns plus 11 new enrichment columns:
 
 ## Architecture
 
-### Object-Oriented Design
+### Class Diagram
+
+![Class Diagram](./diagrams/class_diagram.png)
+
+### Classes
 
 #### 1. `WhatCMSResponse` (Dataclass)
 - Stores enrichment results for a single URL

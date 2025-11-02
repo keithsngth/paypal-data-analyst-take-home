@@ -1,0 +1,77 @@
+classDiagram
+    class WhatCMSResponse {
+        <<dataclass>>
+        + url: str
+        + whatcms_link: str
+        + blog_cms: List[str]
+        + ecommerce_cms: List[str]
+        + programming_language: List[str]
+        + database: List[str]
+        + cdn: List[str]
+        + web_server: List[str]
+        + landing_page_builder_cms: List[str]
+        + operating_system: List[str]
+        + web_framework: List[str]
+        + whatcms_response: str
+        + blog_cms_joined: str
+        + ecommerce_cms_joined: str
+        + programming_language_joined: str
+        + database_joined: str
+        + cdn_joined: str
+        + web_server_joined: str
+        + landing_page_builder_cms_joined: str
+        + operating_system_joined: str
+        + web_framework_joined: str
+        - _join_list_values(list: List[str]): str
+        + __repr__(): str
+    }
+
+    class ConfigFile {
+        <<artifact>>
+        + api_key : str
+        + input_file : str
+        + output_file : str
+    }
+
+    class WhatCMSClient {
+        - BASE_URL: str
+        - api_key: str
+        - rate_limit_delay: float
+        - session: Session
+        + __init__(api_key: str, rate_limit_delay: float)
+        + fetch_cms_data(url: str): WhatCMSResponse
+        - _parse_response(url: str, data: Dict): WhatCMSResponse
+        - _extract_category_data(response_obj: WhatCMSResponse, category: Dict)
+        - _clean_tech_category(technologies: List[str]): str
+        + close()
+    }
+
+    class DataEnricher {
+        - client: WhatCMSClient
+        + __init__(api_key: str)
+        + load_input_data(file_path: str, sheet_name: str): DataFrame
+        + enrich_urls(urls: List[str]): List~WhatCMSResponse~
+        + enrich_dataframe(df: DataFrame, url_column: str): DataFrame
+        - _responses_to_dataframe(responses: List~WhatCMSResponse~): DataFrame
+        + save_output(df: DataFrame, output_path: str)
+        + run_enrichment_workflow(input_file: str, output_file: str, sheet_name: str, url_column: str)
+    }
+
+    class main {
+        <<function>>
+        + main()
+    }
+
+    WhatCMSClient --> WhatCMSResponse : creates/returns
+    DataEnricher *-- WhatCMSClient : composition
+    DataEnricher --> WhatCMSResponse : uses
+    main --> DataEnricher : creates/uses
+    ConfigFile --> main : provides parameters
+
+    note for WhatCMSClient "Handles API communication"
+    note for DataEnricher "Orchestrates the complete enrichment workflow"
+    note for WhatCMSResponse "Data class for API responses"
+    note for main "Main entry point for the application"
+    note for ConfigFile "Configuration file"
+
+
