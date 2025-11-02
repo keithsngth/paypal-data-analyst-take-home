@@ -123,33 +123,15 @@ class DataEnricher:
                 {
                     "url": response.url,
                     "whatcms_link": response.whatcms_link,
-                    "Blog_CMS": ", ".join(response.blog_cms)
-                    if response.blog_cms
-                    else "",
-                    "E-commerce_CMS": ", ".join(response.ecommerce_cms)
-                    if response.ecommerce_cms
-                    else "",
-                    "Programming_Language": ", ".join(response.programming_language)
-                    if response.programming_language
-                    else "",
-                    "Database": ", ".join(response.database)
-                    if response.database
-                    else "",
-                    "CDN": ", ".join(response.cdn) if response.cdn else "",
-                    "Web_Server": ", ".join(response.web_server)
-                    if response.web_server
-                    else "",
-                    "Landing_Page_Builder_CMS": ", ".join(
-                        response.landing_page_builder_cms
-                    )
-                    if response.landing_page_builder_cms
-                    else "",
-                    "Operating_System": ", ".join(response.operating_system)
-                    if response.operating_system
-                    else "",
-                    "Web_Framework": ", ".join(response.web_framework)
-                    if response.web_framework
-                    else "",
+                    "Blog_CMS": response.blog_cms_joined,
+                    "E-commerce_CMS": response.ecommerce_cms_joined,
+                    "Programming_Language": response.programming_language_joined,
+                    "Database": response.database_joined,
+                    "CDN": response.cdn_joined,
+                    "Web_Server": response.web_server_joined,
+                    "Landing_Page_Builder_CMS": response.landing_page_builder_cms_joined,
+                    "Operating_System": response.operating_system_joined,
+                    "Web_Framework": response.web_framework_joined,
                     "whatcms_response": response.whatcms_response,
                 }
             )

@@ -24,10 +24,59 @@ class WhatCMSResponse:
     web_framework: List[str] = field(default_factory=list)
     whatcms_response: str = ""
 
+    @property
+    def blog_cms_joined(self) -> str:
+        """Return comma-separated string of blog CMS technologies."""
+        return self._join_list_values(self.blog_cms)
+
+    @property
+    def ecommerce_cms_joined(self) -> str:
+        """Return comma-separated string of e-commerce CMS technologies."""
+        return self._join_list_values(self.ecommerce_cms)
+
+    @property
+    def programming_language_joined(self) -> str:
+        """Return comma-separated string of programming languages."""
+        return self._join_list_values(self.programming_language)
+
+    @property
+    def database_joined(self) -> str:
+        """Return comma-separated string of databases."""
+        return self._join_list_values(self.database)
+
+    @property
+    def cdn_joined(self) -> str:
+        """Return comma-separated string of CDNs."""
+        return self._join_list_values(self.cdn)
+
+    @property
+    def web_server_joined(self) -> str:
+        """Return comma-separated string of web servers."""
+        return self._join_list_values(self.web_server)
+
+    @property
+    def landing_page_builder_cms_joined(self) -> str:
+        """Return comma-separated string of landing page builder CMS technologies."""
+        return self._join_list_values(self.landing_page_builder_cms)
+
+    @property
+    def operating_system_joined(self) -> str:
+        """Return comma-separated string of operating systems."""
+        return self._join_list_values(self.operating_system)
+
+    @property
+    def web_framework_joined(self) -> str:
+        """Return comma-separated string of web frameworks."""
+        return self._join_list_values(self.web_framework)
+
+    def _join_list_values(self, list: List[str]) -> str:
+        """Return comma-separated string of list values."""
+        return ", ".join(list) if list else ""
+
     def __repr__(self):
         """Return a clean string representation without tabs or extra indentation."""
         lines = [
-            f"WhatCMSResponse:",
+            "WhatCMSResponse:",
             f"  url: {self.url}",
             f"  whatcms_link: {self.whatcms_link}",
             f"  blog_cms: {self.blog_cms}",
