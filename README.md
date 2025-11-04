@@ -146,7 +146,7 @@ The application uses Python Fire for a clean CLI interface:
 
 ```bash
 # Run enrichment with settings from config.yaml
-python -m src/main
+python -m src.main
 ```
 
 This will:
